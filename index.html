@@ -179,20 +179,42 @@
     <li data-time="1:56">
       Video 57
     </li>
-    <li data-time="4:06">
+    <li data-time="4:04">
       Video 58
     </li>
   </ul>
   <script>
     const timeNodes = Array.from(document.querySelectorAll('[data-time]'))
+    const videos = document.querySelector('.videos')
 
-    const seconds = timeNodes.map(node => node.dataset.time) // gets the time as string from data attribute // 
-      .map(timeCode => {
-        const [mins, secs] = timeCode.split(':') // sets min a the 1st 1/2 of split and secs as 2nd 1/2 //
-          .map(parseFloat) // converts string to # // 
-        return (mins * 60) + secs // converts mins to secs then adds all together to get total video duration in secs //
-      })
-      .reduce((total, seconds) => total + seconds)
+    // const seconds = timeNodes.map(node => node.dataset.time) // gets the time as string from data attribute // 
+    //   .map(timeCode => {
+    //     const [mins, secs] = timeCode.split(':') // sets min a the 1st 1/2 of split and secs as 2nd 1/2 //
+    //       .map(parseFloat) // converts string to # // 
+    //     return (mins * 60) + secs // converts mins to secs then adds all together to get total video duration in secs //
+    //   })
+    //   .reduce((total, seconds) => {
+    //     total + seconds
+    //     console.log('total :', total);
+
+    //   })
+
+
+    // let secondsLeft = seconds
+    // const hours = Math.floor(secondsLeft / 3600) // gives whole # of hours from total seconds //
+    // secondsLeft = secondsLeft % 3600 // gives left over total/3600 //
+
+    // const minutes = Math.floor(secondsLeft / 60)
+    // secondsLeft = secondsLeft % 60
+
+
+    // Wes showed us how to do it with map & reduce then challenged us to do it with reduce alone //
+    const seconds = timeNodes.reduce((total, timeNode) => {
+      const timeCode = timeNode.dataset.time
+      let [mins, secs] = timeCode.split(':')
+      durationInSeconds = (parseFloat(mins) * 60) + parseFloat(secs)
+      return total + durationInSeconds
+    }, 0)
 
     let secondsLeft = seconds
     const hours = Math.floor(secondsLeft / 3600) // gives whole # of hours from total seconds //
@@ -201,8 +223,10 @@
     const minutes = Math.floor(secondsLeft / 60)
     secondsLeft = secondsLeft % 60
 
+
+
     console.log('hours, minutes, seconds :', hours, minutes, secondsLeft);
-    
+
 
 
   </script>
